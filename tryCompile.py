@@ -9,7 +9,7 @@ if len(sys.argv) < 2:
   sys.exit(1)
 
 sudoproc = subprocess.call("sudo -v", shell=True)
-
+oldMissingPackageName = ""
 while True:
   sudoproc = subprocess.call("sudo -v", shell=True)
   proc = subprocess.Popen("pdflatex " + sys.argv[1], shell=True,
@@ -39,9 +39,11 @@ while True:
 
   proc.kill()
 
-  if missingPackageName == "":
+  if (missingPackageName == "" or missingPackageName ==
+  oldMissingPackageName):
     sys.exit()
-  
+
+  oldMissingPackageName = missingPackageName 
   print "missing: " + missingPackageName
 
   if not getLatexPackage.installMissing(missingPackageName):
