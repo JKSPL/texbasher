@@ -20,10 +20,21 @@ while True:
     current = line.rstrip()
     
 
-    if(current.endswith(" not found.") 
-        and current.startswith("! LaTeX Error:")):
+    print "current = " + current
+    if(
+        current.endswith(" not found.") 
+        and current.startswith("! LaTeX Error:")
+      ):
       current = current.replace('`', '\'')
       missingPackageName = current.split("\'")[1]
+      break
+
+    if(
+      current.startswith("! Font")
+    ):
+      print current
+      missingPackageName = current[current.find("Font ") + len("Font ") :
+      current.rfind(" at")].split("=")[1]
       break
 
     if(current.endswith(" not found")
