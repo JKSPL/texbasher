@@ -20,7 +20,7 @@ def findPackageName(plik, output):
 def installMissing(pack):
   plik = "/" + pack
   output = subprocess.check_output(
-    "tlmgr search --global --file " +
+    "tlmgr --no-persistent-downloads search --global --file " +
     plik, shell=True 
   )
   pkgName = findPackageName(plik, output)
@@ -31,7 +31,7 @@ def installMissing(pack):
   print("Found package " + pkgName)
   subprocess.call("sudo -v", shell=True)
 
-  subprocess.call("sudo tlmgr install "
+  subprocess.call("sudo tlmgr --no-persistent-downloads install "
     + pkgName, shell=True
   )
   return True
